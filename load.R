@@ -1,10 +1,14 @@
 library(tidyverse)
+library(lubridate)
 library(readtext)
 
 email_index <- read_csv("data/emails.csv")
 email_index <- email_index %>%
   arrange(publish_date) %>%
-  mutate(email_number = row_number())
+  mutate(
+    email_number = row_number(),
+    publish_date = with_tz(time = publish_date, "America/Toronto")
+  )
 
 newsletters <- readtext("data/newsletters/*")
 newsletters <- tibble(subject = newsletters$doc_id, text = newsletters$text) %>%
