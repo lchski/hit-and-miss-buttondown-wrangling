@@ -11,7 +11,7 @@ email_index <- email_index %>%
   )
 
 newsletters <- readtext("data/newsletters/*")
-newsletters <- tibble(subject = newsletters$doc_id, text = newsletters$text) %>%
+newsletters <- tibble(doc_id = newsletters$doc_id, subject = newsletters$doc_id, text = newsletters$text) %>%
   mutate(subject = gsub("^Hit and Miss #", "", subject)) %>%
   separate(subject, into = c("id", "subject"), sep = ": ") %>%
   mutate(id = parse_number(id)) %>%
